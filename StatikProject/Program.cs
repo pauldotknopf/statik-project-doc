@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Newtonsoft.Json.Linq;
+using PowerArgs;
 using Statik.Files;
 using Statik.Mvc;
 using Statik.Pages;
@@ -25,29 +26,57 @@ namespace StatikProject
         private static IWebBuilder _webBuilder;
         // ReSharper restore InconsistentNaming
 
-        private static async Task Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
-            _webBuilder = Statik.Statik.GetWebBuilder();
-            _webBuilder.RegisterMvcServices();
-            _webBuilder.RegisterServices(services =>
+            try
             {
-                services.AddSingleton(_parser);
-                services.Configure<RazorViewEngineOptions>(options =>
+                _webBuilder = Statik.Statik.GetWebBuilder();
+                _webBuilder.RegisterMvcServices();
+                _webBuilder.RegisterServices(services =>
                 {
-                    //options.FileProviders.Add(new EmbeddedFileProvider(typeof(RequirementsWebBuilder).Assembly, "DocGen.Web.Requirements.Internal.Resources"));
-                    options.FileProviders.Add(new PhysicalFileProvider("/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
+                    services.AddSingleton(_parser);
+                    services.Configure<RazorViewEngineOptions>(options =>
+                    {
+                        //options.FileProviders.Add(new EmbeddedFileProvider(typeof(RequirementsWebBuilder).Assembly, "DocGen.Web.Requirements.Internal.Resources"));
+                        options.FileProviders.Add(new PhysicalFileProvider(
+                            "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
+                    });
                 });
-            });
-            _webBuilder.RegisterDirectory("/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
+                _webBuilder.RegisterDirectory(
+                    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
 
-            if (Directory.Exists(_staticDirectory))
-            {
-                _webBuilder.RegisterDirectory(_staticDirectory);
+                if (Directory.Exists(_staticDirectory))
+                {
+                    _webBuilder.RegisterDirectory(_staticDirectory);
+                }
+
+                await RegisterConfig();
+                await RegisterPages();
+
+                try
+                {
+                    Args.InvokeAction<Program>(args);
+                }
+                catch (ArgException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    ArgUsage.GenerateUsageFromTemplate<Program>().WriteLine();
+                    return -1;
+                }
             }
-            
-            await RegisterConfig();
-            await RegisterPages();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return -1;
+            }
 
+            return 0;
+        }
+
+        [ArgActionMethod, ArgIgnoreCase]
+        public void Serve()
+        {
+            Console.WriteLine("serve");
             using (var host = _webBuilder.BuildWebHost())
             {
                 host.Listen();
@@ -55,6 +84,21 @@ namespace StatikProject
             }
         }
 
+        public class BuildArgs
+        {
+            [ArgDefaultValue("output"), ArgShortcut("o")]
+            public string Output { get; set; }
+        }
+        
+        [ArgActionMethod, ArgIgnoreCase]
+        public async Task Build(BuildArgs args)
+        {
+            using (var host = _webBuilder.BuildVirtualHost())
+            {
+                await Statik.Statik.ExportHost(host, args.Output);
+            }
+        }
+        
         private static async Task RegisterConfig()
         {
             var configFile = Path.Combine(_rootDirectory, "config.yml");

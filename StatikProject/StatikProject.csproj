@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.15.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.2" />
+    <PackageReference Include="PowerArgs" Version="3.5.0" />
     <PackageReference Include="Statik" Version="0.6.1" />
     <PackageReference Include="Statik.Files" Version="0.6.1" />
     <PackageReference Include="Statik.Mvc" Version="0.6.1" />
