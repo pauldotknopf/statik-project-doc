@@ -1,0 +1,95 @@
+@using Statik.Web
+@inject ProjectConfig ProjectConfig
+@inject List<MoreLink> MoreLinks;
+@inject IPageRegistry PageRegistry;
+@{
+    string title = ProjectConfig.Name;
+    var page = PageRegistry.FindOne(p => p.Path.Equals(this.ViewContext.HttpContext.Request.Path));
+    if (page != null && page.State != null)
+    {
+        if (page.State is ITitleHint htmlTitle)
+        {
+            title = htmlTitle.Title + " - " + title;
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/dist/styles.css")" rel="stylesheet" type="text/css"/>
+    <script src="@Url.Content("~/dist/scripts.js")"></script>
+    <title>@title</title>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="full-screen d-flex flex-column h-100">
+            <div class="header">
+                <a class="logo" href="@Url.Content("~/")">
+                    <img src="@Url.Content(ProjectConfig.Logo)" />
+                </a>
+            </div>
+            <div class="main d-flex flex-fill" style="overflow: hidden;">
+                <div class="w-100">@*the custom scrollbar plugin needs a wrapping div*@
+                    <div id="scrolled-sidebar-content" class="h-100">
+                        <div id="sidebar-nav">
+                            @await Component.InvokeAsync("SideMenu")
+                        </div>
+                        @if (MoreLinks != null && MoreLinks.Count > 0)
+                        {
+                            <div class="more">More</div>
+                            <ul class="more-links nav flex-column">
+                                @foreach (var link in MoreLinks)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@link.Url">
+                                            @if (!string.IsNullOrEmpty(link.Icon))
+                                            {
+                                                <i class="@(link.Icon)"></i>
+                                            }
+                                            @link.Text
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        @if (!string.IsNullOrEmpty(ProjectConfig.Footer))
+                        {
+                            <div class="footer">
+                                @Html.Raw(ProjectConfig.Footer)
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <div class="inner">
+            <button type="button" id="sidebar-collapse" class="btn btn-link">
+                <i class="fas fa-align-left"></i>
+            </button>
+            @await Component.InvokeAsync("TopMenu")
+            @RenderBody()
+        </div>
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(ProjectConfig.GoogleTrackingId))
+{
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@(ProjectConfig.GoogleTrackingId)"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+        gtag('config', '@(ProjectConfig.GoogleTrackingId)');
+    </script>
+}
+</body>
+</html>

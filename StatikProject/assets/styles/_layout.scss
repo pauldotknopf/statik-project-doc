@@ -1,0 +1,99 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar {
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  transition: all 0.3s;
+  z-index: 999;
+  background: $sidebar-content-background-color;
+
+  .header {
+    background: $sidebar-header-background-color;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 5px solid darken($sidebar-header-background-color, 7.5%);
+    
+    .logo {
+      @extend .navbar-brand;
+      display: block;
+      
+      img {
+        max-width: 80px;
+      }
+    }
+  }
+}
+
+#sidebar-collapse {
+  display: none;
+}
+
+#content {
+  width: 100%;
+  padding: map-get($spacers, 5) map-get($spacers, 5) * 2;
+  min-height: 100vh;
+  transition: all 0.3s;
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+  .inner {
+    margin-left: 300px;
+    transition: all 0.3s;
+  }
+}
+
+#topmenu {
+  margin: 0 -#{map-get($spacers, 3)} map-get($spacers, 3) * 2;
+  .navbar {
+    padding: ($navbar-padding-y / 2) ($navbar-padding-x / 2);
+  }
+}
+
+@include media-breakpoint-down(md) {
+  #sidebar {
+    width: 230px;
+  }
+  #content {
+    padding: map-get($spacers, 3) map-get($spacers, 5);
+    .inner {
+      margin-left: 230px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  #sidebar {
+    margin-left: -230px;
+  }
+  #sidebar-collapse {
+    display: block;
+  }
+  #content  {
+    padding: 0px;
+    .inner {
+      width: 100%;
+      margin-left: 0px;
+    }
+  }
+  #topmenu {
+    margin: 0 0 map-get($spacers, 3) * 2;
+  }
+  body.sidebar-open {
+    #sidebar {
+      margin-left: 0;
+    }
+    #content {
+      overflow: hidden;
+      .inner {
+        margin-left: 230px;
+      }
+    }
+  }
+}

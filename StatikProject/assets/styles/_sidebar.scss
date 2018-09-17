@@ -1,0 +1,100 @@
+@import "~malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
+
+#sidebar {
+  .mCS-dark-3.mCSB_inside {
+    .mCSB_container {
+      margin-right: 0px;
+    }
+  }
+  .mCS-dark-3.mCSB_scrollTools {
+    .mCSB_dragger {
+      .mCSB_dragger_bar {
+        background-color: rgba($sidebar-header-background-color, .4);
+        width: 8px;
+      }
+      &:hover {
+        .mCSB_dragger_bar {
+          background-color: rgba($sidebar-header-background-color, .6);
+        }
+      }
+      &:active,
+      &.mCSB_dragger_onDrag
+      {
+        .mCSB_dragger_bar {
+          background-color: rgba($sidebar-header-background-color, .6);
+        }
+      }
+    }
+    .mCSB_draggerRail {
+      background-color: rgba($sidebar-header-background-color, .2);
+      width: 8px;
+    }
+  }
+  
+  .more {
+    color: theme-color("light");
+    padding: $nav-link-padding-y $nav-link-padding-x;
+    font-size: $font-size-lg;
+  }
+  
+  .more-links {
+    .nav-link {
+      font-size: $font-size-sm;
+      color: darken(theme-color("light"), 30%);
+      @include hover-focus {
+        color: theme-color("light");
+      }
+    }
+  }
+  
+  .footer {
+    color: darken(theme-color("light"), 30%);
+    padding: map-get($spacers, 2) map-get($spacers, 2) map-get($spacers, 3);
+    text-align: center;
+    a {
+      color: darken(theme-color("light"), 30%);
+      font-weight: $font-weight-bold;
+      @include hover-focus {
+        color: theme-color("light");
+      }
+    }
+  }
+}
+
+#sidebar-nav {
+  padding-top: 25px;
+  .nav {
+    .nav-item {
+      .nav-link {
+        font-size: $font-size-sm;
+        color: darken(theme-color("light"), 30%);
+        @include hover-focus {
+          color: theme-color("light");
+        }
+        padding: ($nav-link-padding-y / 2) ($nav-link-padding-x / 2);
+      }
+      &.level-1 {
+        > .nav-link {
+          font-size: $font-size-base;
+          padding: $nav-link-padding-y $nav-link-padding-x;
+        }
+        &.active {
+          background-color: darken(theme-color("dark"), 10%);
+          @extend .pb-3;
+        }
+      }
+      .nav {
+        margin-left: 15px;
+      }
+      &.selected {
+        > .nav-link {
+          background-color: theme-color("light");
+          color: theme-color("dark");
+          @include hover-focus {
+            color: theme-color("dark");
+          }
+        }
+      }
+    }
+  }
+}

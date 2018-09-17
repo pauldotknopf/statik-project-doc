@@ -1,0 +1,13 @@
+@model List<MenuItemModel>
+<ul class="nav flex-column">
+    @foreach (var item in Model)
+    {
+        <li class="nav-item @(item.Active ? "active" : "") @(item.Selected ? "selected" : "") level-@(item.Level)">
+            <a class="nav-link" href="@Url.Content($"~{item.Path}")">@item.Title</a>
+            @if (item.Children.Count > 0)
+            {
+                @await Html.PartialAsync("_RenderMenuItems", item.Children)
+            }
+        </li>
+    }
+</ul>
