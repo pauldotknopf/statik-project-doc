@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Newtonsoft.Json.Linq;
 using PowerArgs;
@@ -42,12 +43,13 @@ namespace StatikProject
                             "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
                     });
                 });
+                
                 _webBuilder.RegisterDirectory(
                     "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
 
                 if (Directory.Exists(_staticDirectory))
                 {
-                    _webBuilder.RegisterDirectory(_staticDirectory);
+                    _webBuilder.RegisterFileProvider(new PhysicalFileProvider(_staticDirectory, ExclusionFilters.None));
                 }
 
                 await RegisterConfig();
@@ -77,9 +79,10 @@ namespace StatikProject
         public void Serve()
         {
             Console.WriteLine("serve");
-            using (var host = _webBuilder.BuildWebHost())
+            using (var host = _webBuilder.BuildWebHost(port: 8000))
             {
                 host.Listen();
+                Console.WriteLine("Listening on port 8080...");
                 Console.ReadLine();
             }
         }
