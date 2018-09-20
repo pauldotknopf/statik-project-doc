@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Newtonsoft.Json.Linq;
 using PowerArgs;
+using Statik.Embedded;
 using Statik.Files;
 using Statik.Mvc;
 using Statik.Pages;
@@ -39,14 +40,16 @@ namespace StatikProject
                     services.Configure<RazorViewEngineOptions>(options =>
                     {
                         //options.FileProviders.Add(new EmbeddedFileProvider(typeof(RequirementsWebBuilder).Assembly, "DocGen.Web.Requirements.Internal.Resources"));
-                        options.FileProviders.Add(new PhysicalFileProvider(
-                            "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
+                        //options.FileProviders.Add(new PhysicalFileProvider(
+                        //    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
+                        options.FileProviders.Add(new EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources"));
                     });
                 });
                 
-                _webBuilder.RegisterDirectory(
-                    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
-
+                //_webBuilder.RegisterDirectory(
+                //    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
+                _webBuilder.RegisterFileProvider(new EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources.wwwroot"));
+                
                 if (Directory.Exists(_staticDirectory))
                 {
                     _webBuilder.RegisterFileProvider(new PhysicalFileProvider(_staticDirectory, ExclusionFilters.None));
