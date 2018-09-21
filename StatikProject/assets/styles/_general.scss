@@ -1,0 +1,45 @@
+.mprimary,
+.msecondary,
+.msuccess,
+.mdanger,
+.mwarning,
+.minfo,
+.mlight,
+.mdark {
+  @extend .alert;
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.mprimary {
+  @extend .alert-primary;
+}
+
+.msecondary {
+  @extend .alert-secondary;
+}
+
+.msuccess {
+  @extend .alert-success;
+}
+
+.mdanger {
+  @extend .alert-danger;
+}
+
+.mwarning {
+  @extend .alert-warning;
+}
+
+.minfo {
+  @extend .alert-info;
+}
+
+.mlight {
+  @extend .alert-light;
+}
+
+.mdark {
+  @extend .alert-dark;
+}
