@@ -1,18 +1,22 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Markdig;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Statik.Pages;
 using StatikProject.Misc;
 using StatikProject.Models;
+using StatikProject.Services;
 
 namespace StatikProject.Controllers
 {
     public class PageController : Controller
     {
+        private readonly IMarkdownRenderer _markdownRenderer;
+
+        public PageController(IMarkdownRenderer markdownRenderer)
+        {
+            _markdownRenderer = markdownRenderer;
+        }
+        
         public async Task<ActionResult> Page(
             [FromRouteData]PageNode page,
             [FromRouteData]MenuItem menu)
@@ -23,9 +27,8 @@ namespace StatikProject.Controllers
             {
                 model.SideMenu.AddRange(GetSideMenu(menu));
             }
-            
-            model.Markup = Markdown.ToHtml(page.Markdown,
-                new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
+
+            model.Markup = _markdownRenderer.Render(page.Markdown);
             
             return View(model);
         }
