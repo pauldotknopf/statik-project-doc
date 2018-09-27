@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -15,6 +15,8 @@ using Statik.Mvc;
 using Statik.Pages;
 using Statik.Web;
 using StatikProject.Misc;
+using StatikProject.Services;
+using StatikProject.Services.Impl;
 
 namespace StatikProject
 {
@@ -37,6 +39,7 @@ namespace StatikProject
                 _webBuilder.RegisterServices(services =>
                 {
                     services.AddSingleton(_parser);
+                    services.AddSingleton<IMarkdownRenderer, MarkdownRenderer>();
                     services.Configure<RazorViewEngineOptions>(options =>
                     {
                         //options.FileProviders.Add(new EmbeddedFileProvider(typeof(RequirementsWebBuilder).Assembly, "DocGen.Web.Requirements.Internal.Resources"));
