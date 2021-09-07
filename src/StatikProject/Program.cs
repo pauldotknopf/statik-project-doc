@@ -25,7 +25,6 @@ namespace StatikProject
         // ReSharper disable InconsistentNaming
         private static readonly Services.IMarkdownParser _parser = new Services.Impl.MarkdownParser();
         private static readonly string _rootDirectory = Path.Combine(Environment.CurrentDirectory);
-        private static readonly string _contentDirectory = Path.Combine(_rootDirectory, "content");
         private static readonly string _staticDirectory = Path.Combine(_rootDirectory, "static");
         private static IWebBuilder _webBuilder;
         // ReSharper restore InconsistentNaming
@@ -209,7 +208,7 @@ namespace StatikProject
         {
             return await Statik.Statik.GetPageDirectoryLoader()
                 .LoadFiles(
-                    new PhysicalFileProvider(_contentDirectory),
+                    new PhysicalFileProvider(_rootDirectory),
                     new PageDirectoryLoaderOptions
                     {
                         IndexPageMatcher = new Matcher(StringComparison.Ordinal).AddInclude("index.md"),
