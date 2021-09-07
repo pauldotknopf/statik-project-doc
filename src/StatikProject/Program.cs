@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Newtonsoft.Json.Linq;
 using PowerArgs;
-using Statik.Embedded;
 using Statik.Files;
 using Statik.Mvc;
 using Statik.Pages;
@@ -40,18 +40,17 @@ namespace StatikProject
                 {
                     services.AddSingleton(_parser);
                     services.AddSingleton<IMarkdownRenderer, MarkdownRenderer>();
-                    services.Configure<RazorViewEngineOptions>(options =>
+                    services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
                     {
-                        //options.FileProviders.Add(new EmbeddedFileProvider(typeof(RequirementsWebBuilder).Assembly, "DocGen.Web.Requirements.Internal.Resources"));
-                        //options.FileProviders.Add(new PhysicalFileProvider(
-                        //    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources"));
-                        options.FileProviders.Add(new EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources"));
+                        options.FileProviders.Add(new PhysicalFileProvider(
+                            "/home/pknopf/git/statik-project-doc/src/StatikProject/Resources"));
+                        //options.FileProviders.Add(new Statik.Embedded.EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources"));
                     });
                 });
                 
-                //_webBuilder.RegisterDirectory(
-                //    "/Users/pknopf/git/qmlnet.github.io/statik-project-doc/StatikProject/Resources/wwwroot");
-                _webBuilder.RegisterFileProvider(new EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources.wwwroot"));
+                _webBuilder.RegisterDirectory(
+                    "/home/pknopf/git/statik-project-doc/src/StatikProject/Resources/wwwroot");
+                //_webBuilder.RegisterFileProvider(new EmbeddedFileProvider(typeof(Program).Assembly, "StatikProject.Resources.wwwroot"));
                 
                 if (Directory.Exists(_staticDirectory))
                 {
@@ -88,7 +87,7 @@ namespace StatikProject
             using (var host = _webBuilder.BuildWebHost(port: 8000))
             {
                 host.Listen();
-                Console.WriteLine("Listening on port 8080...");
+                Console.WriteLine("Listening on port 8000...");
                 Console.ReadLine();
             }
         }
