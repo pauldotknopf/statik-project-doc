@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{49707070-0FE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatikProject", "src\StatikProject\StatikProject.csproj", "{7D6EE2AD-4EC7-4055-8843-74FE1D32CB15}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{41C77A47-9312-4298-833D-493019D29920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "build\scripts\Build.csproj", "{039F1A0D-1525-4313-8E11-7F968053A0CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{7D6EE2AD-4EC7-4055-8843-74FE1D32CB15}.Release|x64.Build.0 = Release|Any CPU
 		{7D6EE2AD-4EC7-4055-8843-74FE1D32CB15}.Release|x86.ActiveCfg = Release|Any CPU
 		{7D6EE2AD-4EC7-4055-8843-74FE1D32CB15}.Release|x86.Build.0 = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|x64.Build.0 = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{039F1A0D-1525-4313-8E11-7F968053A0CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7D6EE2AD-4EC7-4055-8843-74FE1D32CB15} = {49707070-0FE2-4650-B8BF-E32E04FD02EF}
+		{039F1A0D-1525-4313-8E11-7F968053A0CA} = {41C77A47-9312-4298-833D-493019D29920}
 	EndGlobalSection
 EndGlobal

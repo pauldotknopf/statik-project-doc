@@ -1,0 +1,11 @@
+<Project>
+    <Import Project="version.props" />
+    <PropertyGroup>
+        <Authors>Paul Knopf</Authors>
+        <Description>Build project documentation with simple conventions, with support for including protofiles and doxygen.</Description>
+        <Copyright>2021</Copyright>
+        <PackageLicenseUrl>https://github.com/pauldotknopf/statik-project-doc/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/pauldotknopf/statik-project-doc</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/pauldotknopf/statik-project-doc</RepositoryUrl>
+    </PropertyGroup>
+</Project>

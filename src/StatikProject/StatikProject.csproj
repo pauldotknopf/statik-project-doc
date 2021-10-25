@@ -17,9 +17,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Pek.Markdig.HighlightJs" Version="0.6.0-alpha.7" />
     <PackageReference Include="PowerArgs" Version="3.6.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="Statik" Version="0.14.0-alpha.3" />
     <PackageReference Include="Statik.Files" Version="0.14.0-alpha.3" />
     <PackageReference Include="Statik.Mvc" Version="0.14.0-alpha.3" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 
@@ -31,12 +33,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\Views\Shared\Components\SideMenu\Default.cshtml" />
-    <Content Include="Resources\Views\Shared\Components\TopMenu\Default.cshtml" />
-    <Content Include="Resources\Views\Shared\_RenderMenuItems.cshtml" />
   </ItemGroup>
   
 </Project>
